@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm">
+	<div class="card-body">
+		<h3 class="card-title">Eliminar respuesta</h3>
+		<p class="card-text">¿Confirma eliminar la respuesta de <strong>{{ object.autor }}</strong>?</p>
+		<p class="text-muted"><small>Texto: "{{ object.texto|truncatechars:120 }}"</small></p>
+
+		<form method="post" class="d-inline">{% csrf_token %}
+			<button type="submit" class="btn btn-danger">Sí, eliminar</button>
+		</form>
+		<a href="{% url 'detalle_tema' object.tema.pk %}" class="btn btn-secondary ms-2">Cancelar</a>
+	</div>
+</div>
+
+{% endblock %}

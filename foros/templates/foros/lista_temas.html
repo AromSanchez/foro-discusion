@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Temas</h1>
+  <a href="{% url 'crear_tema' %}" class="btn btn-success">Crear nuevo tema</a>
+</div>
+
+{% if temas.count %}
+  <div class="row row-cols-1 row-cols-md-2 g-3">
+    {% for tema in temas %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="row g-0">
+            {% if tema.imagen %}
+              <div class="col-4">
+                <img src="{{ tema.imagen.url }}" class="img-fluid rounded-start" style="height:100%; object-fit:cover;">
+              </div>
+              <div class="col-8">
+            {% else %}
+              <div class="col-12">
+            {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title mb-1"><a href="{% url 'detalle_tema' tema.pk %}" class="text-decoration-none">{{ tema.titulo }}</a></h5>
+                  <p class="card-text mb-1"><small class="text-muted">Por {{ tema.autor }} — {{ tema.fecha }}</small></p>
+                  <div class="mt-2">
+                    <a href="{% url 'crear_respuesta' tema.pk %}" class="btn btn-sm btn-outline-primary">Agregar respuesta</a>
+                    <a href="{% url 'editar_tema' tema.pk %}" class="btn btn-sm btn-outline-secondary ms-2">Editar</a>
+                    <a href="{% url 'eliminar_tema' tema.pk %}" class="btn btn-sm btn-danger ms-2">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">No hay temas aún. Crea el primero.</div>
+{% endif %}
+
+{% endblock %}
